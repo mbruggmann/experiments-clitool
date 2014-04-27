@@ -1,5 +1,8 @@
 package ch.mbruggmann.clitool;
 
+import org.junit.Ignore;
+
+@Ignore
 public class Demo extends CliTool {
 
   @Command
@@ -8,7 +11,7 @@ public class Demo extends CliTool {
     System.out.println(arg2);
   }
 
-  public static void main(String[] args) throws Exception {
+  public static void main(String... args) throws Exception {
     CliTool.main(new Demo(), args);
   }
 
