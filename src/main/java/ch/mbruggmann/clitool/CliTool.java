@@ -44,7 +44,7 @@ public abstract class CliTool {
     }
 
 
-    Namespace namespace = null;
+    final Namespace namespace;
     try {
       namespace = parser.parseArgs(args);
     } catch (ArgumentParserException e) {
@@ -54,12 +54,16 @@ public abstract class CliTool {
 
     cli.init(namespace);
 
-    String subparser = namespace.getString(SUBPARSER_NAME);
-    if (commands.containsKey(subparser)) {
-      commands.get(subparser).run(cli, namespace);
+    try {
+      String subparser = namespace.getString(SUBPARSER_NAME);
+      if (commands.containsKey(subparser)) {
+        commands.get(subparser).run(cli, namespace);
+      } else {
+        System.err.println("no command found to run.");
+      }
+    } finally {
+      cli.destroy();
     }
-
-    cli.destroy();
   }
 
   protected void addGlobalOptions(ArgumentParser parser) {
