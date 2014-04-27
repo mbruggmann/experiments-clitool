@@ -1,6 +1,5 @@
 package ch.mbruggmann.clitool;
 
-@Program(name = "demo", description = "demo how to use the CliTool")
 public class Demo extends CliTool {
 
   @Command

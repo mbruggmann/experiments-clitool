@@ -1,7 +1,6 @@
 package ch.mbruggmann.clitool;
 
 import com.google.common.base.Optional;
-import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import com.google.common.primitives.Primitives;
 import net.sourceforge.argparse4j.ArgumentParsers;
@@ -14,6 +13,9 @@ import java.util.Map;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+/**
+ * Abstract superclass for CLI tools.
+ */
 public abstract class CliTool {
 
   private static final String SUBPARSER_NAME = "subparser-name";
@@ -22,13 +24,8 @@ public abstract class CliTool {
     checkNotNull(cli);
     checkNotNull(args);
 
-    Optional<Program> program = Optional.fromNullable(cli.getClass().getAnnotation(Program.class));
-    final String programName = program.isPresent() ? program.get().name() : cli.getClass().getSimpleName();
-
+    final String programName = cli.getClass().getSimpleName();
     ArgumentParser parser = ArgumentParsers.newArgumentParser(programName).defaultHelp(true);
-    if (program.isPresent() && !Strings.isNullOrEmpty(program.get().description())) {
-      parser.description(program.get().description());
-    }
 
     cli.addGlobalOptions(parser);
 
